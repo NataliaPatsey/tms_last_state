@@ -1,0 +1,34 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+Goods List in my basket
+{% endblock %}
+
+{% block content %}
+<div class="col" xmlns="http://www.w3.org/1999/html">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4 class="my-0 fw-normal">Sum of Your order: {{amount_money}}</h4>
+      <h5 style="color: #498ee3">{{ messg }}</h5>
+    </div>
+    <div class="card-body">
+      {% for good in my_lst %}
+        {{good.good.name}} : {{good.good.price}} x {{good.count}} = {{good.full_price}} <a href="{% url 'delfrombasket' good.pk %}">Del</a><br>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div style="width: 100%; display: flex;align-items: flex-end">
+  <div style="float:left; width: 90%; ">
+ <form method="POST" action="{% url 'order' %}">
+         {% csrf_token %}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    <div class="g-recaptcha" data-sitekey="6LcyQJsaAAAAABU3Wvj8w7JqeEg_vB-8INGpxufO"></div>
+         <br/>
+      <input type="submit" value="Order it">
+     </form>
+  </div>
+
+<div style="float:left;"><a href="{% url 'clearbasket' %}">Del all >></a></div>
+</div>
+{% endblock %}

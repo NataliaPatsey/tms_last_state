@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Edit post
+{% endblock %}
+{% block content %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h4 class="display-3">Edit post</h4>
+        <p class="lead">
+            <form method="POST" enctype="multipart/form-data"  action="">
+                {{form.as_p}}
+                {% csrf_token %}
+                <input type="checkbox" name="draft" value="1" {% if draft != 0 %} checked {% endif %}>Draft</input>
+                <button type='submit'>edit</button>
+            </form>
+        </p>
+    </div>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+
+        <a href="{% url 'posts_list' %}">back to list</a>
+    </div>
+{% endblock %}

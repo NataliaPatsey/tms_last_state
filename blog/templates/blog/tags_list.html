@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+TAGs List
+{% endblock %}
+<h1>All Tags</h1>
+{% block content %}
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {% for el in tags_lst %}
+            <a href="{% url 'posts_with_tag' tag_pk=el.pk %}">{{ el.tag }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}

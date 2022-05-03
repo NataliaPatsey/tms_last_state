@@ -1,0 +1,115 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Post detail
+{% endblock %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom">
+        {{ post.title }}
+      </h3>
+
+      <article class="blog-post">
+        <p class="blog-post-meta">{{ post.create_date.date }} by {{ post.author }}, {{ post.views_count }} veiws(unique likes {{post_like}}/ dislike {{post_dislike}})</p>
+          <p class="blog-post-meta"><i>Rotaton: {{ rat }} , marks: {{ mark_count }}</i><a href="{% url 'post_remark' post_pk=post.pk %}">Remarks</a></p>
+          <div class="row featurette">
+            <div class="col-md-7">
+             <p class="lead">{{ post.text }}</p>
+             {% if favorite_stat %}
+                <a href="{% url 'del_favorite' post_pk=post.pk %}">Delete from Favorire</a>
+             {% else %}
+                <a href="{% url 'add_favorite' post_pk=post.pk %}">Add to Favorire</a>
+             {% endif %}
+            </div>
+
+            <div class="col-md-5">
+                {% if post.file.url != '/media/none' %}
+                <div width="150" height="150" >
+                    <img src='{{ post.file.url }}' width="150" height="150">
+                </div>
+                {% else %}
+                <div width="150" height="150" >
+                {% endif %}
+
+            </div>
+            <div class="col-md-5">
+               {% for el in tags_lst %}
+                    <a href="{% url 'posts_with_tag' tag_pk=el.pk %}">{{ el.tag }}</a>
+               {% endfor %}
+
+            </div>
+          </div>
+
+
+    </article><!-- /.blog-post -->
+
+      <nav class="blog-pagination" aria-label="Pagination">
+        <a class="btn btn-outline-primary" href="{% url 'posts_list' %}">Back to list</a>
+        {% if post.author == cur_user %}
+          <a class="btn btn-outline-secondary" href="{% url 'post_edit' post_pk=post.pk %}" tabindex="-1" >edit</a>
+          <a class="btn btn-outline-secondary" href="{% url 'post_delete_confirm' post_pk=post.pk %}" tabindex="-1" >delete</a>
+         {% else %}
+          <small class="text-muted">You cant edit it. You are not author</small>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+          <a class="btn btn-outline-secondary" href="{% url 'post_like' post_pk=post.pk %}" tabindex="-1" >Like it !</a>
+          <a class="btn btn-outline-secondary" href="{% url 'post_dislike' post_pk=post.pk %}" tabindex="-1" >Not like it ( </a>
+        {% endif %}
+
+      </nav>
+        <div>
+            <p>Comments {{count_com }}</p>
+        {% for comm in comments %}
+            <small class="text-muted">{{ comm.user}}, {{ comm.create_date}}</small>
+            <p class="blog-post-meta">{{ comm.text}}</p>
+             {% if comm.user == cur_user %}
+                <a href="{% url 'comment_edit' comm_pk=comm.pk %}">edit>>></a>
+            {% endif %}
+            <hr>
+        {% endfor %}
+        </div>
+        {% if request.user.is_authenticated %}
+            <div>
+            <form method="post" action="{% url 'new_comment' post_pk=post.pk %}" >
+                 {% csrf_token %}
+                {{ new_comment.as_p}}
+                <input type="submit" value="Add comment">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="p-4 mb-3 bg-light rounded">
+        <h4 class="fst-italic">Last five posts</h4>
+        <p class="mb-0">
+          <ol class="list-unstyled">
+            {% for el in posts_five %}
+                <li><a href="{% url 'post_detail' post_pk=el.pk %}">{{ el.title }}</a><small class="text-muted"> by {{ el.author }}, {{ el.create_date.date }}</small>
+</li>
+            {% endfor %}
+            </ol>
+        </p>
+      </div>
+      <div class="p-4 mb-3 bg-light rounded">
+        <h4 class="fst-italic">Posts of today</h4>
+        <p class="mb-0">
+          <ol class="list-unstyled">
+            {% for post in posts_of_day %}
+                <li><a href="{% url 'post_detail' post_pk=post.pk %}">{{ post.title }}</a><small class="text-muted"> by {{ post.author }}, {{ post.create_date.date }}</small>
+</li>
+            {% endfor %}
+            </ol>
+        </p>
+      </div>
+
+
+    </div>
+</div>
+
+{% endblock %}
+

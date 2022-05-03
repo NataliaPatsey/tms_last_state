@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Post by category
+{% endblock %}
+<h1>Post by category</h1>
+{% block content %}
+
+ <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {% for post in posts_lst %}
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+            <h4 class="my-0 fw-normal"><a href="{% url 'post_detail' post_pk=post.pk %}">{{ post.title }}</a></h4>
+                <small class="text-muted"> by {{ post.author }}, {{ post.create_date.date }}, {{ post.count }} comms </small>
+            </div>
+            <div class="card-body">
+                {{ post.text }}
+                <a href="{% url 'post_detail' post_pk=post.pk %}">
+                    <button type="button" class="w-100 btn btn-lg btn-outline-primary">More info/Edit</button></a>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+ </div>
+{% endblock %}

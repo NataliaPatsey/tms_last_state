@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-body border-bottom shadow-sm">
+  <p class="h5 my-0 me-md-auto fw-normal">APPBlog</p>
+        <span style="float: right; margin-left: auto">
+            <nav class="my-2 my-md-0 me-md-3">
+    <a class="p-2 text-dark" href="{% url 'posts_list' %}">Posts_Lists</a>
+    <a class="p-2 text-dark" href="{% url 'posts_draft' %}">Draft_Lists</a>
+    <a class="p-2 text-dark" href="{% url 'tags_list' %}">Tags_Lists</a>
+    <a class="p-2 text-dark" href="{% url 'stat' %}">Statistics_List</a>
+    <a class="p-2 text-dark" href="{% url 'categories_list' %}">Categories_List</a>
+
+
+    {% if request.user.is_authenticated %}
+    <a class="p-2 text-dark" href="{% url 'new_post' %}">New_Post</a>
+    <a class="p-2 text-dark" href="{% url 'post_favorite' %}">My_Favorite</a>
+     {% endif %}
+    </nav>
+        </span>
+
+    {% if request.user.is_authenticated %}
+      <span style="float: right; margin-left: 50px">
+          <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
+          <div style="float: bottom"><small class="text-muted">You are {{ user }}</small></div>
+      </span>
+    {% else %}
+        <span style="float: right; margin-left: 50px">
+            <a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a>
+        </span>
+        <span style="float: right; margin-left: 50px">
+            <a class="btn btn-outline-primary" href="{% url 'login' %}">Sign up</a>
+        </span>
+        {% endif %}
+
+
+
+</header>
+<main class="container">
+
+{% block content %}
+
+{% endblock %}
+
+</main>
+</body>
+</html>

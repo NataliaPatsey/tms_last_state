@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+Add_card
+{% endblock %}
+
+{% block content %}
+<div class="container py-5" id="featured-3">
+  <h2 class="pb-2 border-bottom">Add new card</h2>
+  <div class="row g-5 py-5">
+    <div>{{ messg }}<br></div>
+     <form method="post">
+
+    <div class="feature col-md-4">
+      <div class="feature-icon bg-primary bg-gradient">
+        <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
+      </div>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"> Add</button>
+    </div>
+   </form>
+  </div>
+</div>
+
+
+
+{% endblock %}

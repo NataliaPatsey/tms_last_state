@@ -1,0 +1,66 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+Goods List
+{% endblock %}
+
+{% block content %}
+<div>
+      {% for cat in categories_lst %}
+     <a  href="{% url 'find_by_category' category_pk=cat.pk %}">{{cat.name}}</a> |
+     {% endfor %}
+</div>
+<div class="container py-5" id="featured-3">
+  <h2 class="pb-2 border-bottom">Goods List</h2>
+  <div class="row g-5 py-5">
+     {% for good in goods_lst %}
+    <div class="feature col-md-4">
+      <div class="feature-icon bg-primary bg-gradient">
+        <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
+      </div>
+      <h2>{{ good.name }}</h2>
+      <small class="text-muted">Price: {{ good.price }}</small>
+      <div>{{ good.about}}<a href="{% url 'add_to_basket' good_pk=good.pk %}"> buy it>>></a>
+        {% if good.file.url != "/media/none" %}
+            <img src="{{ good.file.url }}" style="float: right" height="75px" width="75"/>
+        {% endif %}
+        </div>
+      <a class="icon-link" href="{% url 'find_by_category' category_pk=good.category.pk %}">{{ good.category.name }}
+        <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"></use></svg>
+      </a>
+    </div>
+     {% endfor %}
+  </div>
+</div>
+
+
+<section id="featured-services" class="featured-services section-bg">
+      <div class="container">
+
+        <div class="row no-gutters">
+          <div class="col-lg-4 col-md-6">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-laptop"></i></div>
+              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-briefcase"></i></div>
+              <h4 class="title"><a href="">Dolor Sitema</a></h4>
+              <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-calendar4-week"></i></div>
+              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur trade stravi</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+{% endblock %}

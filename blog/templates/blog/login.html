@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Login Page
+{% endblock %}
+
+{% block content %}
+<h3 class="pb-4 mb-4 fst-italic border-bottom">
+        Registration registration</h3>
+
+<form action="" method="post">
+      {% csrf_token %}
+      <!-- as_p для того, чтобы каждый элемент формы был с новой строки -->
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+    </form>
+
+{% endblock %}

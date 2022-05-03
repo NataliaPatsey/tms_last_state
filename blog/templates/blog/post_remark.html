@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Post's remark
+{% endblock %}
+{% block content %}
+{{post.title}}
+<br>
+{{post.text}}
+<hr>
+ <form method="POST" action="">
+                {{form.as_p}}
+                {% csrf_token %}
+                <button type='submit'>Add mark|remark </button>
+            </form>
+<hr>
+<br>
+{% if remark_lst  %}
+    {% for rem in remark_lst %}
+        {{ rem.user }}: {{ rem.remark }}--{{ rem.mark }}<br>
+<hr>
+    {% endfor %}
+{% else %}
+<p>No remarks yet? be first!</p>
+{% endif %}
+{% endblock %}
+

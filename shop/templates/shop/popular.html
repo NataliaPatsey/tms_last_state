@@ -1,0 +1,21 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+Popular goods
+{% endblock %}
+
+{% block content %}
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4 class="my-0 fw-normal">Top 3 the most popular</h4>
+    </div>
+        <div class="card-body">
+        <ol>
+            {% for item in popular_test %}
+            <li>{{ item.good__name }}: <small class="text-muted">count of order is </small> {{item.count }} </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% endblock %}

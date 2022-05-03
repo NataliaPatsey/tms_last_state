@@ -1,0 +1,42 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+User profile
+{% endblock %}
+
+{% block content %}
+<div class="col">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+        {% if profile.file.url != '/media/none'  %}
+            <img src='{{ profile.file.url }}' width="100" height="100" align="left">
+        {% endif %}
+        <h3 class="pb-2 border-bottom">Hi, {{ user.username }}</h3>
+        Welcome on your profile page<br>
+        You can edit info :<br>
+        {{ messg }}
+    </div>
+    <div class="card-body">
+         <form method="POST" enctype="multipart/form-data">
+         {% csrf_token %}
+         {{ form.as_p }}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    <div class="g-recaptcha" data-sitekey="6LcyQJsaAAAAABU3Wvj8w7JqeEg_vB-8INGpxufO"></div>
+         <br/>
+      <input type="submit" value="Submit">
+     </form>
+    </div>
+  </div>
+</div>
+
+
+<div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

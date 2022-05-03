@@ -1,0 +1,20 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+My card detail {{card.card_name}}
+{% endblock %}
+
+{% block content %}
+
+<div class="col-lg-4 col-md-6">
+<div class="icon-box">
+<div class="icon"><i class="bi bi-calendar4-week"></i></div>
+<h4 class="title"><a href="">{{card.card_name}}</a></h4>
+<p class="description">Number: {{card.card_number}}</p>
+<p class="description">Exp. date: {{card.card_year}}/{{card.card_month}}</p>
+</div>
+</div>
+
+<a href="{% url 'user_profile' %}">Profile</a>
+
+{% endblock %}

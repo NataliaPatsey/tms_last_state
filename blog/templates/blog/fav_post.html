@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+favore_post
+{% endblock %}
+{% block content %}
+Favorite post for  {{user}}
+<hr>
+{% for el in fav %}
+<a href="{% url 'post_detail' post_pk=el.post.id %}">{{el.post.title}}</a><br>
+{% endfor %}
+{% endblock %}

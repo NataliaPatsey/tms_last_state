@@ -1,0 +1,155 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Statistic Page
+{% endblock %}
+
+{% block content %}
+
+<h3 class="pb-4 mb-4 fst-italic border-bottom">Statictic</h3>
+ <div class="row">
+      <div class="col-lg-4">
+        <h2>counts posts/draft</h2>
+        <p>count posts: <a href="{% url 'posts_list' %}">{{stat_post}}</a>
+        <p>count draft: <a href="{% url 'posts_draft' %}">{{stat_draft}}</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <h2>Posts by users</h2>
+        <p> {%for el in stat_user_post %}
+          <form id="postby{{el.author__username}}" method="post" action="{% url 'posts_list' %}">
+          {% csrf_token %}
+            <input type="hidden" name="search_by_author" value="{{ el.author__username }}">
+            <a href="#" onclick="document.getElementById('postby{{el.author__username}}').submit();">{{ el.author__username }}</a>: {{ el.user_post}}
+            </form>
+          {% endfor %}</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <h2>Top 5 by uniq views</h2>
+        <p>
+            {%for el in stat_user %}
+                <a href="{% url 'post_detail' post_pk=el.post %}">{{ el.post__title}}</a>--{{ el.user_count}}<br>
+            {% endfor %}
+        </p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+ <div class="row">
+      <div class="col-lg-4">
+        <h2>The best by avg marks</h2>
+        {% for mark in best_by_mark %}
+          <a href="{% url 'post_detail' post_pk=mark.post__id %}">{{mark.post__title}}</a> -- {{mark.davg}}<br>
+        {% endfor %}
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <h2>The best by likes</h2>
+        <p>
+            {% if stat_likes %}
+                {% for post in stat_likes %}
+                  <a href="{% url 'post_detail' post_pk=post.post__id %}">{{post.post__title}}</a> -- {{post.likes_count}}<br>
+                {% endfor %}
+            {% else %}
+                <i>No_data</i>
+            {% endif %}
+        </p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <h2>The best by dislikes </h2>
+        <p>
+            {% if stat_dislikes %}
+                {% for post in stat_dislikes %}
+                  <a href="{% url 'post_detail' post_pk=post.post__id %}">{{post.post__title}}</a> -- {{post.dislikes_count}}<br>
+                {% endfor %}
+            {% else %}
+                <i>No_data</i>
+            {% endif %}
+        </p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+
+
+
+<hr>
+<div class="row">
+      <div class="col-lg-4">
+        <h2>Posts by YEARS</h2>
+        {% for el in res_y %}
+          {{ el.dt_part }}: <b>{{ el.dcount }}</b><br>
+        {% endfor %}
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        {% if chart_y %}
+            <img src="data:image/png;base64, {{chart_y|safe}}">
+        {% endif %}
+      </div><!-- /.col-lg-4 -->
+<!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+<div class="row">
+      <div class="col-lg-4">
+        <h2>Posts by MONTHS</h2>
+        {% for el in res_m %}
+          {{ el.dt_part }}: <b> {{ el.dcount }}</b><br>
+        {% endfor %}
+
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        {% if chart_m %}
+            <img src="data:image/png;base64, {{chart_m|safe}}">
+        {% endif %}
+      </div><!-- /.col-lg-4 -->
+<!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+<div class="row">
+      <div class="col-lg-4">
+        <h2>Posts by DAYS</h2>
+        {% for el in res_d %}
+          {{ el.dt_part }}: <b> {{ el.dcount }}</b>  <br>
+        {% endfor %}
+
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        {% if chart_d %}
+            <img src="data:image/png;base64, {{chart_d|safe}}">
+        {% endif %}
+      </div><!-- /.col-lg-4 -->
+<!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+<div class="row">
+      <div class="col-lg-4">
+        <h2>Posts by HOURS</h2>
+        {% for el in res_h %}
+          {{ el.dt_part }}: <b>{{ el.dcount }}</b>  <br>
+        {% endfor %}
+
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        {% if chart_h %}
+            <img src="data:image/png;base64, {{chart_h|safe}}">
+        {% endif %}
+      </div><!-- /.col-lg-4 -->
+<!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+
+<div class="row">
+      <div class="col-lg-4">
+        <h2>Posts by MINUTES</h2>
+        {% for el in res_min %}
+          {{ el.dt_part }}: <b>{{ el.dcount }}</b>  <br>
+        {% endfor %}
+
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        {% if chart_min %}
+            <img src="data:image/png;base64, {{chart_min|safe}}">
+        {% endif %}
+      </div><!-- /.col-lg-4 -->
+<!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+{% endblock %}
